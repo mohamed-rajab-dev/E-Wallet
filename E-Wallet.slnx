@@ -1,3 +1,6 @@
 <Solution>
   <Project Path="E-Wallet.Api/E-Wallet.Api.csproj" />
+  <Project Path="E-Wallet.Application/E-Wallet.Application.csproj" Id="432f289d-189f-4af9-896a-61ba2fe0e2f0" />
+  <Project Path="E-Wallet.Domain/E-Wallet.Domain.csproj" Id="c12d1c7a-335c-492b-9a7d-31cf176f53ed" />
+  <Project Path="E-Wallet.Infrastructure/E-Wallet.Infrastructure.csproj" Id="c88fb3d8-8b24-4b02-ab0a-43b32c875ea4" />
 </Solution>
