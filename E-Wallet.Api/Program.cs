@@ -1,4 +1,7 @@
 
+using E_Wallet.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
+
 namespace E_Wallet.Api
 {
     public class Program
@@ -7,15 +10,20 @@ namespace E_Wallet.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
 
             builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+            
             builder.Services.AddOpenApi();
+
+            builder.Services.AddInfrastructure(builder.Configuration);
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
@@ -27,6 +35,15 @@ namespace E_Wallet.Api
 
 
             app.MapControllers();
+
+            app.MapFallback(() =>
+            {
+                return Results.NotFound(new
+                {
+                    success = false,
+                    message = "Endpoint not found."
+                });
+            });
 
             app.Run();
         }
