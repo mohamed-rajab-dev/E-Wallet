@@ -22,11 +22,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Services\" />
-	  <Folder Include="Repositories\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\E-Wallet.Application\E-Wallet.Application.csproj" />
 	  <ProjectReference Include="..\E-Wallet.Domain\E-Wallet.Domain.csproj" />
 	</ItemGroup>

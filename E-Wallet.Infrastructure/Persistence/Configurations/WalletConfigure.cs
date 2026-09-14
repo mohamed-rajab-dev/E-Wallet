@@ -20,6 +20,9 @@ namespace E_Wallet.Infrastructure.Persistence.Configurations
             builder.Property(x => x.Currency).IsRequired();
             builder.Property(x => x.CreatedAt).IsRequired();
 
+            builder.Property(x => x.RowVersion)
+            .IsRowVersion();
+
             builder.HasMany(x => x.Transactions)
                 .WithOne(x => x.Wallet)
                 .HasForeignKey(x => x.WalletId)

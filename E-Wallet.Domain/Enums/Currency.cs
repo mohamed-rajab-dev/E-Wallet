@@ -6,6 +6,6 @@ namespace E_Wallet.Domain.Enums
 {
     public enum Currency
     {
-        EGP,
+        EGP = 1
     }
 }
