@@ -11,7 +11,18 @@ namespace E_Wallet.Domain.Entities
         public string LastName { get; set; } = null!;
         public DateTimeOffset CreatedAt { get; set; }
         public Wallet Wallet { get; set; } = null!;
-        public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public ICollection<Transaction> Transactions { get; set; } = [];
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = [];
+
+        public void AddRefreshToken(RefreshToken refreshToken)
+        {
+            RefreshTokens.Add(refreshToken);
+        }
+
+                public void RemoveAllRefreshTokens()
+        {
+            RefreshTokens.Clear();
+        }
 
     }
 }

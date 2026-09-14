@@ -20,10 +20,6 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\E-Wallet.Application\E-Wallet.Application.csproj" />
     <ProjectReference Include="..\E-Wallet.Infrastructure\E-Wallet.Infrastructure.csproj" />
   </ItemGroup>

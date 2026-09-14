@@ -17,10 +17,10 @@
 
 	<ItemGroup>
 	  <Folder Include="Common\Mappings\" />
-	  <Folder Include="DTOs\" />
-	  <Folder Include="Interfaces\" />
-	  <Folder Include="Validators\" />
-	  <Folder Include="Services\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\E-Wallet.Domain\E-Wallet.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

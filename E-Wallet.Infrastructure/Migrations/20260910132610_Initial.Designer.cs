@@ -4,6 +4,7 @@ using E_Wallet.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Wallet.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260910132610_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,31 +133,6 @@ namespace E_Wallet.Infrastructure.Migrations
                     b.ToTable("DynamicOtp");
                 });
 
-            modelBuilder.Entity("E_Wallet.Domain.Entities.RefreshToken", b =>
-                {
-                    b.Property<string>("Token")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<DateTimeOffset>("ExpiresAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<DateTimeOffset?>("RevokedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Token");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RefreshToken");
-                });
-
             modelBuilder.Entity("E_Wallet.Domain.Entities.Transaction", b =>
                 {
                     b.Property<long>("Id")
@@ -170,12 +148,9 @@ namespace E_Wallet.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("IdempotencyKey")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long>("ReferenceId")
                         .HasColumnType("bigint");
@@ -196,8 +171,7 @@ namespace E_Wallet.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("WalletId", "IdempotencyKey")
-                        .IsUnique();
+                    b.HasIndex("WalletId");
 
                     b.ToTable("Transaction");
                 });
@@ -303,12 +277,6 @@ namespace E_Wallet.Infrastructure.Migrations
 
                     b.Property<int>("Currency")
                         .HasColumnType("int");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -495,17 +463,6 @@ namespace E_Wallet.Infrastructure.Migrations
                     b.Navigation("Wallet");
                 });
 
-            modelBuilder.Entity("E_Wallet.Domain.Entities.RefreshToken", b =>
-                {
-                    b.HasOne("E_Wallet.Domain.Entities.User", "User")
-                        .WithMany("RefreshTokens")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("E_Wallet.Domain.Entities.Transaction", b =>
                 {
                     b.HasOne("E_Wallet.Domain.Entities.User", "User")
@@ -599,8 +556,6 @@ namespace E_Wallet.Infrastructure.Migrations
 
             modelBuilder.Entity("E_Wallet.Domain.Entities.User", b =>
                 {
-                    b.Navigation("RefreshTokens");
-
                     b.Navigation("Transactions");
 
                     b.Navigation("Wallet")

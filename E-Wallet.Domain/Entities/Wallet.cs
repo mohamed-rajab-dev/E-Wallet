@@ -15,24 +15,32 @@ namespace E_Wallet.Domain.Entities
         public DateTimeOffset CreatedAt { get; set; }
 
         public User User { get; set; } = null!;
-        public ICollection<DynamicOtp> DynamicOtps { get; set; } = new List<DynamicOtp>();
-        public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public ICollection<DynamicOtp> DynamicOtps { get; set; } = [];
+        public ICollection<Transaction> Transactions { get; set; } = [];
+        public byte[] RowVersion { get; private set; } = [];
 
         public void Credit(decimal amount)
         {
-            if (amount <= 0)
-                throw new ArgumentException("Amount must be greater than zero.");
+            if(amount <= 0)
+            {
+                throw new ArgumentException("Amount must be greater than zero.", nameof(amount));
+            }
 
             Balance += amount;
         }
 
         public void Debit(decimal amount)
         {
-            if (amount <= 0)
-                throw new ArgumentException("Amount must be greater than zero.");
+            if(amount <= 0)
+            {
+                throw new ArgumentException("Amount must be greater than zero.", nameof(amount));
+            }
 
-            if (Balance < amount)
+            if(amount > Balance)
+            {
                 throw new InvalidOperationException("Insufficient balance.");
+            }
+
 
             Balance -= amount;
         }

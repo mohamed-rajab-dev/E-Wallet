@@ -9,6 +9,7 @@ namespace E_Wallet.Domain.Enums
         Transfer,
         Deposit,
         Withdrawal,
+        Received,
 
     }
 }

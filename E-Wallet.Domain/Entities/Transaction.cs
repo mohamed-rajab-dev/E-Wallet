@@ -15,7 +15,8 @@ namespace E_Wallet.Domain.Entities
         public string? Description { get; set; }
         public decimal Amount { get; set; }
         public TransactionStatus Status { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
+        public string IdempotencyKey { get; set; } = null!;
         public Wallet Wallet { get; set; } = null!;
         public User User { get; set; } = null!;
     }

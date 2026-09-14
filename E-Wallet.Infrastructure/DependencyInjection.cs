@@ -1,6 +1,10 @@
 ﻿using E_Wallet.Application.Common.Result;
+using E_Wallet.Application.Interfaces.Respositories;
+using E_Wallet.Application.Interfaces.Services;
 using E_Wallet.Domain.Entities;
 using E_Wallet.Infrastructure.Persistence;
+using E_Wallet.Infrastructure.Repositories;
+using E_Wallet.Infrastructure.Services;
 using E_Wallet.Infrastructure.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
@@ -9,8 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace E_Wallet.Infrastructure
@@ -39,14 +41,14 @@ namespace E_Wallet.Infrastructure
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
-            //services.Configure<MailSettings>(config.GetSection("MailSettings"));
+
             services.Configure<Jwt>(config.GetSection("Jwt"));
 
-            //services.AddScoped<IMailService, MailService>();
-            //services.AddScoped<ITokenService, TokenService>();
-            //services.AddScoped<IOTPService, OTPService>();
-            //services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IDynamicOtpService, DynamicOtpService>();
+            services.AddScoped<IWalletRepository, WalletRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
             services.AddAuthentication(option =>
             {

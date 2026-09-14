@@ -14,8 +14,9 @@ namespace E_Wallet.Infrastructure.Persistence.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.Amount).IsRequired().HasColumnType("decimal(18,2)");
-            builder.Property(x => x.Description).IsRequired().HasMaxLength(200);
+            builder.Property(x => x.Description).IsRequired(false).HasMaxLength(200);
             builder.Property(x => x.CreatedAt).IsRequired();
+            builder.HasIndex(x => new{ x.WalletId, x.IdempotencyKey }).IsUnique();
 
         }
     }

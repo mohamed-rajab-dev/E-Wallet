@@ -15,7 +15,6 @@ namespace E_Wallet.Infrastructure.Persistence.Configurations
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.UserName).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Email).IsRequired();
-            builder.Property(x => x.PhoneNumber).IsRequired().HasMaxLength(20);
             builder.Property(x => x.PasswordHash).IsRequired();
             builder.Property(x => x.CreatedAt).IsRequired();
 
@@ -30,6 +29,11 @@ namespace E_Wallet.Infrastructure.Persistence.Configurations
                    .WithOne(x => x.User)
                    .HasForeignKey(x => x.UserId)
                    .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.RefreshTokens)
+                   .WithOne(x => x.User)
+                   .HasForeignKey(x => x.UserId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
