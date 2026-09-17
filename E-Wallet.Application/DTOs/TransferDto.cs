@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace E_Wallet.Application.Interfaces.Services
+namespace E_Wallet.Application.DTOs
 {
     public class TransferDto
     {

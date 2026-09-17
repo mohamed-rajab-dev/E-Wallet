@@ -16,7 +16,7 @@ namespace E_Wallet.Application.Validators
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password is required")
-                .MinimumLength(8).WithMessage("Email or Password is incorrect")
+                .MinimumLength(8)
                 .Matches(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$").WithMessage("Email or Password is incorrect");
         }
     }
