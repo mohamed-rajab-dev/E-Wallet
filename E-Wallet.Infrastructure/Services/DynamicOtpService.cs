@@ -23,15 +23,5 @@ namespace E_Wallet.Infrastructure.Services
 
             return Convert.ToHexString(hash);
         }
-
-        public bool VerifyOtp(string otp, string storedHash)
-        {
-            var hash = HashOtp(otp);
-
-            return CryptographicOperations.FixedTimeEquals(
-                Convert.FromHexString(hash),
-                Convert.FromHexString(storedHash)
-            );
-        }
     }
 }

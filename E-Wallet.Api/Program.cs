@@ -2,6 +2,7 @@
 using E_Wallet.Api.CustomMiddleware;
 using E_Wallet.Api.Filters;
 using E_Wallet.Application;
+using E_Wallet.Application.Common.Result;
 using E_Wallet.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -36,7 +37,20 @@ namespace E_Wallet.Api
                     limiterOptions.QueueLimit = 0;
                 });
 
-                options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+                //options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+                options.OnRejected = async (context, cancellationToken) =>
+                {
+                    context.HttpContext.Response.StatusCode =
+                        StatusCodes.Status429TooManyRequests;
+
+                    var result = Result.Failure(
+                        "Too many requests. Please try again later.");
+
+                    await context.HttpContext.Response.WriteAsJsonAsync(
+                        result,
+                        cancellationToken);
+                }; ;
+
             });
 
             builder.Services.AddOpenApi();

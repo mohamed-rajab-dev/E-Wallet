@@ -14,8 +14,24 @@ namespace E_Wallet.Domain.Entities
         public DateTimeOffset ExpirationTime { get; set; }
         public DateTimeOffset? UsedAt { get; set; }
         public OtpStatus Status { get; set; } = OtpStatus.Pending;
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
         public Wallet Wallet { get; set; } = null!;
         public AtmOperation? Operation { get; set; }
+
+        public bool IsExpired()
+        {
+            if(DateTimeOffset.UtcNow > ExpirationTime)
+            {
+                Status = OtpStatus.Expired;
+                return true;
+            }
+            return false;
+        }
+
+        public void MarkAsUsed()
+        {
+            Status = OtpStatus.Used;
+            UsedAt = DateTimeOffset.UtcNow;
+        }
     }
 }
